@@ -1,0 +1,9 @@
+{
+	"name": "adf-ucb-entel",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5ff2b0e8-7b96-4213-a238-87dfb7cd9272",
+		"tenantId": "cc28633f-12b8-46cb-bc15-951dae239b4d"
+	}
+}
