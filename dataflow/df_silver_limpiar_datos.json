@@ -1,0 +1,98 @@
+{
+	"name": "df_silver_limpiar_datos",
+	"properties": {
+		"folder": {
+			"name": "silver"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_tabla03",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_silver_entel",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "cast1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          descripcion as string,",
+				"          tipo as string,",
+				"          numero_origen as string,",
+				"          numero_destino as string,",
+				"          fecha as string,",
+				"          hora as string,",
+				"          duracion as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 select(mapColumn(",
+				"          descripcion,",
+				"          tipo,",
+				"          numero_origen,",
+				"          numero_destino,",
+				"          fecha,",
+				"          hora,",
+				"          duracion",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(fecha = trim(fecha)) ~> derivedColumn1",
+				"derivedColumn1 cast(output(",
+				"          duracion as integer",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          tipo as string,",
+				"          numero_origen as string,",
+				"          numero_destino as string,",
+				"          fecha as date,",
+				"          hora as timestamp,",
+				"          duracion as integer,",
+				"          costo as decimal(18,0)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          tipo,",
+				"          numero_origen,",
+				"          numero_destino,",
+				"          fecha,",
+				"          hora,",
+				"          duracion",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

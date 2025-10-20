@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_03_csv",
+						"referenceName": "ds_llamadas_entel",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
