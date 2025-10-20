@@ -1,0 +1,52 @@
+{
+	"name": "ds_silver_entel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_sw_entel",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "silver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "numero_origen",
+				"type": "varchar"
+			},
+			{
+				"name": "numero_destino",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha",
+				"type": "date"
+			},
+			{
+				"name": "hora",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "duracion",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "costo",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "LLAMADAS"
+		}
+	}
+}
